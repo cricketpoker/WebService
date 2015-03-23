@@ -33,18 +33,6 @@
 
 <!-- Mapping classes -->
 <mapping class="com.cricpoker.data.objects.User"/>
-<mapping class="com.cricpoker.data.objects.Team"/>
-<mapping class="com.cricpoker.data.objects.Answer"/>
-<mapping class="com.cricpoker.data.objects.Badge"/>
-<mapping class="com.cricpoker.data.objects.Challenge"/>
-<mapping class="com.cricpoker.data.objects.ChallengeEnrollment"/>
-<mapping class="com.cricpoker.data.objects.Group"/>
-<mapping class="com.cricpoker.data.objects.Match"/>
-<!--  <mapping class="com.cricpoker.data.objects.GroupEnrollment"/>
-<mapping class="com.cricpoker.data.objects.MatchScoreHistory"/>
-<mapping class="com.cricpoker.data.objects.Player"/>
-<mapping class="com.cricpoker.data.objects.Question"/>
-<mapping class="com.cricpoker.data.objects.QuestionType"/>-->
    
  </session-factory>
 </hibernate-configuration>
