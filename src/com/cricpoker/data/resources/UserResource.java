@@ -31,7 +31,7 @@ public class UserResource {
   @GET
   @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
   public User getTodo() {
-	  User todo = UserDao.instance.getModel().get(id);
+	  User todo = null;
     if(todo==null)
       throw new RuntimeException("Get: Todo with " + id +  " not found");
     return todo;
@@ -41,7 +41,7 @@ public class UserResource {
   @GET
   @Produces(MediaType.TEXT_XML)
   public User getTodoHTML() {
-	  User todo = UserDao.instance.getModel().get(id);
+	  User todo = null;
     if(todo==null)
       throw new RuntimeException("Get: Todo with " + id +  " not found");
     return todo;
@@ -56,19 +56,13 @@ public class UserResource {
   
   @DELETE
   public void deleteTodo() {
-	  User c = UserDao.instance.getModel().remove(id);
+	  User c = null;
     if(c==null)
       throw new RuntimeException("Delete: Todo with " + id +  " not found");
   }
   
   private Response putAndGetResponse(User todo) {
-    Response res;
-    if(UserDao.instance.getModel().containsKey(todo.getId())) {
-      res = Response.noContent().build();
-    } else {
-      res = Response.created(uriInfo.getAbsolutePath()).build();
-    }
-    UserDao.instance.getModel().put(todo.getId(), todo);
+    Response res = null;
     return res;
   }
   
