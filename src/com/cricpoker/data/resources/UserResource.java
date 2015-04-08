@@ -1,71 +1,36 @@
 package com.cricpoker.data.resources;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
+import java.util.Date;
+
+import javax.ws.rs.FormParam;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Request;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
-import javax.xml.bind.JAXBElement;
+
+import org.joda.time.DateTime;
 
 import com.cricpoker.data.access.UserDao;
 import com.cricpoker.data.objects.User;
 
+@Path("/users")
 public class UserResource {
-  @Context
-  UriInfo uriInfo;
-  @Context
-  Request request;
-  String id;
-  public UserResource(UriInfo uriInfo, Request request, String id) {
-    this.uriInfo = uriInfo;
-    this.request = request;
-    this.id = id;
-  }
-  
-  //Application integration     
-  @GET
-  @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-  public User getTodo() {
-	  User todo = null;
-    if(todo==null)
-      throw new RuntimeException("Get: Todo with " + id +  " not found");
-    return todo;
-  }
-  
-  // for the browser
-  @GET
-  @Produces(MediaType.TEXT_XML)
-  public User getTodoHTML() {
-	  User todo = null;
-    if(todo==null)
-      throw new RuntimeException("Get: Todo with " + id +  " not found");
-    return todo;
-  }
-  
-  @PUT
-  @Consumes(MediaType.APPLICATION_XML)
-  public Response putTodo(JAXBElement<User> todo) {
-	  User c = todo.getValue();
-    return putAndGetResponse(c);
-  }
-  
-  @DELETE
-  public void deleteTodo() {
-	  User c = null;
-    if(c==null)
-      throw new RuntimeException("Delete: Todo with " + id +  " not found");
-  }
-  
-  private Response putAndGetResponse(User todo) {
-    Response res = null;
-    return res;
-  }
-  
-  
+	
+	private UserDao userDao;
+	
+	public UserResource() {
+		userDao = new UserDao();
+	}
+	
+	@POST
+	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+	public User addOrGetUser(@FormParam("displayName") String displayName,
+			@FormParam("lastLoggedInTime") Date lastLoggedInTime,
+			@FormParam("favTeamId") int favTeamId) {
+		
+		User user = userDao.createOrGet(new DateTime(), displayName, favTeamId);	
+		
+		return user;
+	}
 
-} 
+}

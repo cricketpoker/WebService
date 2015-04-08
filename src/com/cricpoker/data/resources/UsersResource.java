@@ -22,8 +22,7 @@ import org.joda.time.DateTime;
 import com.cricpoker.data.access.UserDao;
 import com.cricpoker.data.objects.User;
 
-// Will map the resource to the URL todos
-@Path("/users")
+// Will map the resource to the URL users
 public class UsersResource {
 
 	// Allows to insert contextual objects into the class,
@@ -96,8 +95,8 @@ public class UsersResource {
 	// Allows to type http://localhost:8080/de.vogella.jersey.todo/rest/todos/1
 	// 1 will be treaded as parameter todo and passed to TodoResource
 	@Path("{todo}")
-	public UserResource getTodo(@PathParam("todo") String id) {
-		return new UserResource(uriInfo, request, id);
+	public UserResourceRef getTodo(@PathParam("todo") String id) {
+		return new UserResourceRef(uriInfo, request, id);
 	}
 
 }

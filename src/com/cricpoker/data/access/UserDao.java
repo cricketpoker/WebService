@@ -15,29 +15,35 @@ public class UserDao extends CommonDao<User> {
 		super(User.class);
 	}
 
-	public User createUser(DateTime lastLoggedInTime, String displayName,
-			int tokensLeft, int favTeamId) {
-
-		User user = new User();
-		user.setDisplayName(displayName);
-		user.setFavTeamId(favTeamId);
-		user.setLastLoggedInTime(lastLoggedInTime);
-		user.setTokensLeft(DEFAULT_TOKENS);
-		user = new UserDao().insert(user);
+	public User createOrGet(DateTime lastLoggedInTime, String displayName, int favTeamId) {
+		
+		List<User> users = listUserBySingleCriteria("displayName", displayName);
+		User user;
+		
+		if(users.isEmpty()) {
+			user = new User();
+			user.setDisplayName(displayName);
+			user.setFavTeamId(favTeamId);
+			user.setLastLoggedInTime(lastLoggedInTime);
+			user.setTokensLeft(DEFAULT_TOKENS);
+			insert(user);
+		} else {
+			user = users.get(0);
+		}
 		return user;
 	}
 
 	public List<User> listUserBySingleCriteria(String columnName,
 			String columnValue) {
 
-		List<User> users = new UserDao().queryByCriteria(columnName,
+		List<User> users = queryByCriteria(columnName,
 				columnValue);
 		return users;
 	}
 
 	public List<User> listAllUsers() {
 
-		User user = createUser(DateTime.now(), "soham", 200, 1);
+		User user = createOrGet(DateTime.now(), "soham", 1);
 		List<User> users = new ArrayList<User>() {
 		};
 		
